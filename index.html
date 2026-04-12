@@ -7,128 +7,60 @@
     <meta name="description" content="Personal homepage of Cameron Taaffe">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #030712;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.5);
-            --card-bg: rgba(30, 41, 59, 0.4);
-            --card-border: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
-        }
-
-        .container {
-            text-align: center;
-            padding: 3rem;
-            border-radius: 2rem;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-out;
-            max-width: 450px;
-            width: 90%;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .link-item {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid transparent;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .link-item:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--card-border);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .link-item span {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            .container {
-                padding: 2rem;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Cameron Taaffe</h1>
-        <div class="links">
-            <a href="https://github.com/dct2012" class="link-item" target="_blank" rel="noopener noreferrer">
-                <span>github</span>
-            </a>
-            <a href="https://www.linkedin.com/in/cameron-taaffe/" class="link-item" target="_blank" rel="noopener noreferrer">
-                <span>linkedin</span>
-            </a>
+    <header class="taskbar">
+        <div class="taskbar-left">
+            <span class="workspace-active">1: terminal</span>
         </div>
-    </div>
+        <div class="taskbar-right">
+            <span id="current-time" class="time-box"></span>
+        </div>
+    </header>
+
+    <main class="desktop">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                guest@camerontaffe: ~
+            </div>
+            <div class="terminal-content">
+                <div class="banner">
+  ___                              _____            
+ / __|__ _ _ __  ___ _ _ ___ _ _  |_   _|_ _  __ _ / _|/ _| ___ 
+| (__/ _` | '  \/ -_) '_/ _ \ ' \   | |/ _` |/ _` |  _|  _|/ -_)
+ \___\__,_|_|_|_\___|_| \___/_||_|  |_|\__,_|\__,_|_| |_|  \___|
+                </div>
+
+                <div class="warning">
+                    [!] WARNING: UNAUTHORIZED ACCESS PROHIBITED [!]
+                    All activities on this system are logged.
+                </div>
+
+                <div class="system-info">
+                    <strong>OS</strong>:      <span>Custom OS v1.0.0 (Linux)</span><br>
+                    <strong>Host</strong>:    <span>CameronTaaffe.com</span><br>
+                    <strong>Kernel</strong>:  <span>6.8.5-1-pf3</span><br>
+                    <strong>Shell</strong>:   <span>zsh 5.9</span><br>
+                    <strong>Memory</strong>:  <span>1337MB / 64GB</span><br>
+                </div>
+
+                <div class="links-section">
+                    Explore:<br>
+                    - <a href="https://github.com/dct2012" class="terminal-link" target="_blank">github.com/dct2012</a><br>
+                    - <a href="https://www.linkedin.com/in/cameron-taaffe/" class="terminal-link" target="_blank">linkedin.com/in/cameron-taaffe</a><br>
+                </div>
+
+                <br>
+                <div class="prompt">
+                    <span class="prompt-text">[guest@camerontaffe ~]$</span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
 </body>
 </html>
