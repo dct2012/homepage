@@ -22,16 +22,18 @@ function initTerminal() {
     const promptText = '[guest@camerontaaffe ~]$';
 
     let currentCommand = '';
+    const commandHistory = [];
+    let historyIndex = -1;
 
     document.addEventListener('keydown', (e) => {
         // Prevent default browser behavior for common terminal keys
-        if (['Enter', 'Backspace', ' '].includes(e.key)) {
+        if (['Enter', 'Backspace', ' ', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
             e.preventDefault();
         }
 
         if (e.key === 'Enter') {
             const command = currentCommand.trim();
-            
+
             // Add current command to history
             const historyLine = document.createElement('div');
             historyLine.className = 'history-line';
@@ -39,6 +41,10 @@ function initTerminal() {
             terminalHistory.appendChild(historyLine);
 
             if (command !== '') {
+                // Save to command history array
+                commandHistory.push(currentCommand);
+                historyIndex = -1;
+
                 const errorLine = document.createElement('div');
                 errorLine.textContent = `zsh: command not found: ${command.split(' ')[0]}`;
                 terminalHistory.appendChild(errorLine);
@@ -47,13 +53,34 @@ function initTerminal() {
             // Reset input
             currentCommand = '';
             commandInput.textContent = '';
-            
+
             // Scroll to bottom
             terminalContent.scrollTop = terminalContent.scrollHeight;
         } else if (e.key === 'Backspace') {
             currentCommand = currentCommand.slice(0, -1);
             commandInput.textContent = currentCommand;
             terminalContent.scrollTop = terminalContent.scrollHeight;
+        } else if (e.key === 'ArrowUp') {
+            if (commandHistory.length > 0) {
+                if (historyIndex === -1) {
+                    historyIndex = commandHistory.length - 1;
+                } else if (historyIndex > 0) {
+                    historyIndex--;
+                }
+                currentCommand = commandHistory[historyIndex];
+                commandInput.textContent = currentCommand;
+            }
+        } else if (e.key === 'ArrowDown') {
+            if (historyIndex !== -1) {
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    currentCommand = commandHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    currentCommand = '';
+                }
+                commandInput.textContent = currentCommand;
+            }
         } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
             currentCommand += e.key;
             commandInput.textContent = currentCommand;
