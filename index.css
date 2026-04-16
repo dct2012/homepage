@@ -101,6 +101,14 @@ body {
     font-size: 0.95rem;
 }
 
+#terminal-history, .prompt {
+    white-space: pre-wrap;
+}
+
+.history-line {
+    margin: 4px 0;
+}
+
 /* ASCII Banner */
 .banner {
     color: var(--accent);
