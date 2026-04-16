@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /index.html
+Allow: /
+Disallow: /index.css
+Disallow: /index.js
+Disallow: /README.md
+Disallow: /CNAME
+Disallow: /og-image.png
