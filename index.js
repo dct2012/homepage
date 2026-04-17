@@ -19,19 +19,30 @@ function initTerminal() {
     const terminalHistory = document.getElementById('terminal-history');
     const commandInput = document.getElementById('command-input');
     const terminalContent = document.getElementById('terminal-content');
+    const hiddenInput = document.getElementById('hidden-input');
     const promptText = '[guest@camerontaaffe ~]$';
 
     let currentCommand = '';
     const commandHistory = [];
     let historyIndex = -1;
 
-    document.addEventListener('keydown', (e) => {
-        // Prevent default browser behavior for common terminal keys
-        if (['Enter', 'Backspace', ' ', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
-            e.preventDefault();
-        }
+    // Focus hidden input on terminal click
+    terminalContent.addEventListener('click', () => {
+        hiddenInput.focus();
+    });
 
+    // Auto-focus on load
+    hiddenInput.focus();
+
+    hiddenInput.addEventListener('input', (e) => {
+        currentCommand = e.target.value;
+        commandInput.textContent = currentCommand;
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+    });
+
+    hiddenInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault();
             const command = currentCommand.trim();
 
             // Add current command to history
@@ -53,14 +64,12 @@ function initTerminal() {
             // Reset input
             currentCommand = '';
             commandInput.textContent = '';
+            hiddenInput.value = '';
 
             // Scroll to bottom
             terminalContent.scrollTop = terminalContent.scrollHeight;
-        } else if (e.key === 'Backspace') {
-            currentCommand = currentCommand.slice(0, -1);
-            commandInput.textContent = currentCommand;
-            terminalContent.scrollTop = terminalContent.scrollHeight;
         } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
             if (commandHistory.length > 0) {
                 if (historyIndex === -1) {
                     historyIndex = commandHistory.length - 1;
@@ -69,8 +78,10 @@ function initTerminal() {
                 }
                 currentCommand = commandHistory[historyIndex];
                 commandInput.textContent = currentCommand;
+                hiddenInput.value = currentCommand;
             }
         } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
             if (historyIndex !== -1) {
                 if (historyIndex < commandHistory.length - 1) {
                     historyIndex++;
@@ -80,21 +91,19 @@ function initTerminal() {
                     currentCommand = '';
                 }
                 commandInput.textContent = currentCommand;
+                hiddenInput.value = currentCommand;
             }
-        } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            currentCommand += e.key;
-            commandInput.textContent = currentCommand;
-            terminalContent.scrollTop = terminalContent.scrollHeight;
         }
     });
 
     // Handle paste events
-    document.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const text = (e.clipboardData || window.clipboardData).getData('text');
-        currentCommand += text;
-        commandInput.textContent = currentCommand;
-        terminalContent.scrollTop = terminalContent.scrollHeight;
+    hiddenInput.addEventListener('paste', (e) => {
+        // Default behavior for input handles paste, but we need to sync
+        setTimeout(() => {
+            currentCommand = hiddenInput.value;
+            commandInput.textContent = currentCommand;
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+        }, 0);
     });
 }
 
